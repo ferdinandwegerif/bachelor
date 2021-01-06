@@ -10,4 +10,5 @@ Counceling Notes
 * Contact Emails:
    * Ferdinand Wegerif, ferdinand.wegerif@gmail.com
    * Martin Overelv, ---
+   * Leander Nikolaus Jehl, leander.jehl@uis.no
 * Google Docs [Invite Link](https://drive.google.com/drive/folders/1Qf7gcBeIkOgUbiZ_vQK2ZrqtLny66zND?usp=sharing)
