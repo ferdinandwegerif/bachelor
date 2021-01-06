@@ -8,5 +8,5 @@ Counceling Notes
 06. Jan
 ------
 * Contact Emails:
-..* Ferdinand Wegerif, ferdinand.wegerif@gmail.com
-..* Martin Overelv, ---
+** Ferdinand Wegerif, ferdinand.wegerif@gmail.com
+** Martin Overelv, ---
