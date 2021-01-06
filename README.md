@@ -5,8 +5,9 @@ Bachelor Git Resources
 
 Counceling Notes
 ======
-06. Jan
-------
+
+## 6. Jan
+-----
 * Contact Emails:
    * Ferdinand Wegerif, ferdinand.wegerif@gmail.com
    * Martin Overelv, ---
