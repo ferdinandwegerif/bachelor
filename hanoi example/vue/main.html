@@ -18,39 +18,67 @@
                             {{ possibility }}
                         </option>
                     </select>
-                    <button class="btn btn-outline-secondary" v-on:click="solveHanoi">Auto-Solve</button>
+                    <div>
+                        <button class="btn btn-outline-secondary" v-on:click="restartTower">Reset</button>
+                        <button class="btn btn-outline-secondary" v-on:click="solveHanoi">Auto-Solve</button>
+                    </div>
                 </div>
             </nav>
         </header>
         <main role="main" class="flex-grow-1 overflow-auto d-flex justify-content-center">
-            <div class="card text-center" style="width: 50%; height: 80%;">
-                <div class="card-header" v-if="solved">Congratulations, the tower is solved!</div>
-                <div class="card-header" v-else>The tower is unsolved.</div>
-                <div class="card-body d-flex flex-row align-items-stretch justify-content-around">
-                    <div class="p-2 d-flex flex-column justify-content-end w-75" id="tower-left">
-                        <div v-for="pillar in towers.left" style="background-color: lightgray;">{{ pillar }}</div>
-                        <div style="background-color: #6c757D">&nbsp;</div>
-                    </div>
-                    <div class="p-2 d-flex flex-column justify-content-end w-75" id="tower-center">
-                        <div v-for="pillar in towers.center" style="background-color: lightgray;">{{ pillar }}</div>
-                        <div style="background-color: #6c757D">&nbsp;</div>
-                    </div>
-                    <div class="p-2 d-flex flex-column justify-content-end w-75" id="tower-right">
-                        <div v-for="pillar in towers.right" style="background-color: lightgray;">{{ pillar }}</div>
-                        <div style="background-color: #6c757D">&nbsp;</div>
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                  {{ (moves == 1) ? moves + " move done." : moves + " moves done." }}
-                </div>
-              </div>
+            <tower-component id="towersElement" v-bind:towers="towers" v-bind:moves="moves" v-bind:solved="solved" v-bind:size="size"></tower-component>
         </main>
     </div>
 </body>
 </html>
 
 <script type="text/javascript">
-    // TODO: Create Vue components for Towers
+    let towerComponent = Vue.component('towerComponent', {
+        props: ['towers', 'moves', 'solved', 'size'],
+        template: `
+        <div class="card text-center" style="width: 50%; height: 80%;">
+            <div class="card-header" v-if="solved">Congratulations, the tower is solved!</div>
+            <div class="card-header" v-else>The tower is unsolved.</div>
+            <div class="card-body d-flex flex-row align-items-stretch justify-content-around">
+                <div class="p-2 d-flex flex-column justify-content-end w-75" v-for="tower in towers">
+                    <div class="align-self-center" v-for="slab in tower" v-bind:style="calculatedStyle(slab)" v-on:click="toggleActive(slab, tower)">&nbsp;</div>
+                    <div style="background-color: #6c757D" v-on:click="moveActive(tower)">&nbsp;</div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                {{ (moves == 1) ? moves + " move done." : moves + " moves done." }}
+            </div>
+        </div>
+        `,
+        methods: {
+            calculatedStyle: function(slab){
+                let color = (slab.active) ? "lightgreen" : "lightgray"
+                return "background-color: " + color + "; width: calc(" + slab.id + "*100%/" + this.size + "); border-bottom: solid 1px #adaaaa";
+            },
+            toggleActive: function(slab, tower){
+                let tempArray = [];
+                for(let i = 0; i < tower.length; i++) {
+                    tower[i].active = (slab.id >= tower[i].id) ? true : false;
+                    tempArray.push(tower[i]);
+                }
+                while(tower.length > 0) tower.pop();
+                while(tempArray.length > 0){
+                    let activeSlab = tempArray.pop();
+                    this.active.slabs.unshift(activeSlab);
+                    tower.unshift(activeSlab);
+                }
+                this.active.tower = tower;
+            },
+            moveActive: function(tower){
+                //TODO: Create method for moving active slabs from their tower to the correct tower
+            }
+        },
+        data() {
+            return {
+                active: { 'tower' : null, 'slabs' : [] }
+            }
+        }
+    })
 
     let app = new Vue({
         el: '#root',
@@ -73,7 +101,7 @@
             restartTower: function() {
                 this.towers = { towerLeft:[], towerCenter:[], towerRight:[] }
                 for(let i = parseInt(this.size); i > 0; i--) {
-                    this.towers.towerLeft.unshift(i);
+                    this.towers.towerLeft.unshift({'id':i,'active':false});
                 }
                 this.moves = 0;
             }
@@ -83,6 +111,9 @@
             this.moves = 0;
             this.solved = false;
             this.restartTower();
+        },
+        components: {
+            towerComponent
         }
     });
 </script>
