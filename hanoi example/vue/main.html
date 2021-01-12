@@ -26,7 +26,7 @@
             </nav>
         </header>
         <main role="main" class="flex-grow-1 overflow-auto d-flex justify-content-center">
-            <tower-component id="towersElement" v-bind:towers="towers" v-bind:moves="moves" v-bind:solved="solved" v-bind:size="size"></tower-component>
+            <tower-component id="towersElement" v-bind:towers="towers" v-bind:moves="moves" v-bind:size="size"></tower-component>
         </main>
     </div>
 </body>
@@ -34,14 +34,13 @@
 
 <script type="text/javascript">
     let towerComponent = Vue.component('towerComponent', {
-        props: ['towers', 'moves', 'solved', 'size'],
+        props: ['towers', 'moves', 'size'],
         template: `
         <div class="card text-center" style="width: 50%; height: 80%;">
-            <div class="card-header" v-if="solved">Congratulations, the tower is solved!</div>
-            <div class="card-header" v-else>The tower is unsolved.</div>
+            <div class="card-header">{{ solved }}</div>
             <div class="card-body d-flex flex-row align-items-stretch justify-content-around">
                 <div class="p-2 d-flex flex-column justify-content-end w-75" v-for="tower in towers">
-                    <div class="align-self-center" v-for="slab in tower" v-bind:style="calculatedStyle(slab)" v-on:click="toggleActive(slab, tower)">&nbsp;</div>
+                    <div class="align-self-center" v-for="slab in tower" v-bind:style="calculatedStyle(slab)" v-on:click="toggleActive(tower)">&nbsp;</div>
                     <div style="background-color: #6c757D" v-on:click="moveActive(tower)">&nbsp;</div>
                 </div>
             </div>
@@ -51,31 +50,61 @@
         </div>
         `,
         methods: {
-            calculatedStyle: function(slab){
+            calculatedStyle: function(slab) {
                 let color = (slab.active) ? "lightgreen" : "lightgray"
                 return "background-color: " + color + "; width: calc(" + slab.id + "*100%/" + this.size + "); border-bottom: solid 1px #adaaaa";
             },
-            toggleActive: function(slab, tower){
+            toggleActive: function(tower) {
+                //Remove current slabs to avoid adding previous slabs
+                this.active.slabs.forEach(element => {
+                    this.$set(element, 'active', false);
+                });
+                this.active.slabs.splice(0,this.active.slabs.length);
+
+                //Recreating tower
                 let tempArray = [];
                 for(let i = 0; i < tower.length; i++) {
-                    tower[i].active = (slab.id >= tower[i].id) ? true : false;
+                    if(i == 0){
+                        tower[i].active = true;
+                        this.active.slabs.unshift(tower[i]);
+                    }else{
+                        tower[i].active = false;
+                    }
                     tempArray.push(tower[i]);
                 }
-                while(tower.length > 0) tower.pop();
+
+                //Removing tower
+                tower.splice(0, tower.length);
                 while(tempArray.length > 0){
-                    let activeSlab = tempArray.pop();
-                    this.active.slabs.unshift(activeSlab);
-                    tower.unshift(activeSlab);
+                    tower.unshift(tempArray.pop());
                 }
                 this.active.tower = tower;
             },
-            moveActive: function(tower){
-                //TODO: Create method for moving active slabs from their tower to the correct tower
+            moveActive: function(tower) {
+                if(this.active.tower != null && this.active.tower != tower){
+                    if(tower.length > 0){
+                        if(tower[0].id < this.active.slabs[this.active.slabs.length-1].id){
+                            return
+                        }
+                    }
+                    this.active.tower.splice(0, this.active.slabs.length);
+                    this.active.slabs.forEach(element => {
+                        element.active = false;
+                        tower.unshift(element);
+                    });
+                    this.$set(this, 'active', { 'tower' : null, 'slabs' : [] })
+                    this.$parent.makeMove();
+                }
             }
         },
         data() {
             return {
                 active: { 'tower' : null, 'slabs' : [] }
+            }
+        },
+        computed: {
+            solved() {
+                return (this.towers.towerRight.length == this.size)? "Congratulations, the tower is solved!" : "The tower is unsolved.";
             }
         }
     })
@@ -91,12 +120,29 @@
             possibleSizes: [ 3, 5, 7, 10 ],
             size: 3,
             moves: 0,
-            solved: false
+            callStack: []
         },
         methods: {
             solveHanoi: function() {
-                // TODO: Compute queue of moves and then start a timer with them 
+                //Compute queue of moves and then start a timer with them
+                this.restartTower();
+                this.callStack = [];
+                this.hanoiSolution(this.size, this.towers.towerLeft, this.towers.towerRight, this.towers.towerCenter);
+                this.callStack.forEach((command,index) => {
+                    setTimeout(() => {command.func(command.param);},2500*index/(this.size*this.size*this.size));
+                });
                 return;
+            },
+            hanoiSolution: function(size, from, via, to) {
+                if (size==0) return;
+
+                this.hanoiSolution(size-1, from, to , via);
+
+                // save function calls to callStack array so that we can perform them seperately
+                this.callStack.push({ 'func' : this.$children[0].toggleActive, 'param' : from });
+                this.callStack.push({ 'func' : this.$children[0].moveActive, 'param' : via });
+                
+                this.hanoiSolution(size-1, to, via, from);
             },
             restartTower: function() {
                 this.towers = { towerLeft:[], towerCenter:[], towerRight:[] }
@@ -104,12 +150,14 @@
                     this.towers.towerLeft.unshift({'id':i,'active':false});
                 }
                 this.moves = 0;
+            },
+            makeMove: function() {
+                this.$set(this, 'moves', this.moves+1);
             }
         },
         mounted: function() {
             this.size = 3;
             this.moves = 0;
-            this.solved = false;
             this.restartTower();
         },
         components: {
