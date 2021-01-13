@@ -128,10 +128,14 @@
                 this.restartTower();
                 this.callStack = [];
                 this.hanoiSolution(this.size, this.towers.towerLeft, this.towers.towerRight, this.towers.towerCenter);
+                
+                /* //Interval based, looks cool but is totally pointless and processor heavy.
                 this.callStack.forEach((command,index) => {
                     setTimeout(() => {command.func(command.param);},2500*index/(this.size*this.size*this.size));
                 });
-                return;
+                */
+                // Non-interval based, less processor heavy.
+                this.callStack.forEach(command => {command.func(command.param)});
             },
             hanoiSolution: function(size, from, via, to) {
                 if (size==0) return;
