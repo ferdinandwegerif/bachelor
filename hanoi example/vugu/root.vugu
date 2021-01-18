@@ -13,59 +13,194 @@
         <nav class="navbar navbar-light bg-light justify-content-between">
             <a class="navbar-brand">Tower of Hanoi</a>
             <div style="display: contents;">
-                <select class="custom-select" style="max-width: 20%;" id="inputGroupSelect04" aria-label="Example select with button addon">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="custom-select" style="max-width: 20%;" id="inputGroupSelect04" aria-label="Example select with button addon" @change='c.Restart(assertIntegerResult(event.Prop("target", "value")))'>
+                    <option vg-for='_, size := range c.SizeOptions' vg-content='size'></option>
                 </select>
-                <button class="btn btn-outline-secondary" type="button">Auto-Solve</button>
+                <div>
+                    <button class="btn btn-outline-secondary" @click="c.Restart(c.Size)">Reset</button>
+                    <button class="btn btn-outline-secondary" @click="c.AutoSolve()">Auto-Solve</button>
+                </div>
             </div>
         </nav>
     </header>
     <main role="main" class="flex-grow-1 overflow-auto d-flex justify-content-center">
         <div class="card text-center" style="width: 50%; height: 80%;">
-            <div class="card-header">
-                Unsolved
-            </div>
+            <div class="card-header" vg-content="c.SolveStatus()"></div>
             <div class="card-body d-flex flex-row align-items-stretch justify-content-around">
-                <div class="p-2 d-flex flex-column justify-content-end w-75" id="tower-left">
-                    <div style="background-color: red;">1</div>
-                    <div style="background-color: blue;">2</div>
-                    <div style="background-color: yellow;">3</div>
-                    <div style="background-color: green;">4</div>
-                    <div style="background-color: orange;">5</div>
+                <div class="p-2 d-flex flex-column justify-content-end w-75">
+                    <div class="align-self-center" @click='c.Board.Left.MakeActive(c.Board)' vg-for="_, slab := range c.Board.Left.Slabs" :style='c.Board.Left.getAttributes(slab, c.Size)'>&nbsp;</div>
+                    <div style="background-color: #6c757D" @click='c.MoveActive(&c.Board.Left)'>&nbsp;</div>
                 </div>
-                <div class="p-2 d-flex flex-column justify-content-end w-75" id="tower-center">
-                    <div style="background-color: red;">1</div>
-                    <div style="background-color: blue;">2</div>
-                    <div style="background-color: yellow;">3</div>
-                    <div style="background-color: green;">4</div>
-                    <div style="background-color: orange;">5</div>
+                <div class="p-2 d-flex flex-column justify-content-end w-75">
+                    <div class="align-self-center" @click='c.Board.Center.MakeActive(c.Board)' vg-for="_, slab := range c.Board.Center.Slabs" :style='c.Board.Center.getAttributes(slab, c.Size)'>&nbsp;</div>
+                    <div style="background-color: #6c757D" @click='c.MoveActive(&c.Board.Center)'>&nbsp;</div>
                 </div>
-                <div class="p-2 d-flex flex-column justify-content-end w-75" id="tower-right">
-                    <div style="background-color: red;">1</div>
-                    <div style="background-color: blue;">2</div>
-                    <div style="background-color: yellow;">3</div>
-                    <div style="background-color: green;">4</div>
-                    <div style="background-color: orange;">5</div>
+                <div class="p-2 d-flex flex-column justify-content-end w-75">
+                    <div class="align-self-center" @click='c.Board.Right.MakeActive(c.Board)' vg-for="_, slab := range c.Board.Right.Slabs" :style='c.Board.Right.getAttributes(slab, c.Size)'>&nbsp;</div>
+                    <div style="background-color: #6c757D" @click='c.MoveActive(&c.Board.Right)'>&nbsp;</div>
                 </div>
             </div>
-            <div class="card-footer text-muted">
-                0 Moves Done
+            <div vg-if='c.Moves == 1'>
+                <div class="card-footer text-muted" vg-content='strconv.Itoa(c.Moves) + " move done."'></div>
             </div>
+            <div vg-if='c.Moves != 1'>
+                <div class="card-footer text-muted" vg-content='strconv.Itoa(c.Moves) + " moves done."'></div>
             </div>
+        </div>
     </main>
 </div>
-<!--
-</body>
-</html>
--->
-
 
 <script type="application/x-go">
 
+import (
+    "fmt"
+    "strconv"
+)
+
+// structs / components
 type Root struct {
+    Board           *towers
+    Moves           int
+    SizeOptions     []int
+    Size            int
+    Solved          bool
 }
 
+type towers struct {
+    Left    tower
+    Center  tower
+    Right   tower
+}
+
+type tower struct {
+    Active  bool
+    Slabs   []int
+}
+
+//component init lifecycle execution
+func (c *Root) Init(ctx vugu.InitCtx) {
+    c.Board = &towers{}
+    c.Restart(0)
+}
+
+//restart / start function
+func (c *Root) Restart (size int) {
+    //error handling
+    if c.SizeOptions == nil {
+        c.SizeOptions = []int{ 3, 5, 7, 10, 20 }
+    }
+    if size == 0 {
+        size = c.SizeOptions[0]
+    }
+
+    //setting root variables
+    c.Moves = 0
+    c.Size = size
+    c.Solved = false
+
+    //setting tower variables
+    c.Board = &towers{
+        Left:   tower{ Active: false, Slabs: make([]int, size) },
+        Center: tower{ Active: false, Slabs: make([]int, 0) },
+        Right:  tower{ Active: false, Slabs: make([]int, 0) },
+    }
+    for i:=1; i<=size; i++ {
+        c.Board.Left.Slabs[i-1] = i
+    }
+}
+
+//solve status text
+func (c *Root) SolveStatus() string {
+    if len(c.Board.Right.Slabs) == c.Size {
+        return "Congratulations, the tower is solved!"
+    }
+    return "The tower is unsolved."
+}
+
+//AutoSolve
+func (c *Root) AutoSolve () {
+    c.Restart(c.Size)
+    c.hanoi(c.Size, &c.Board.Left, &c.Board.Right, &c.Board.Center)
+}
+
+//hanoi solution
+func (c *Root) hanoi(size int, source, target, temp *tower){
+    if size > 0 {
+        //recursive prefix
+        c.hanoi(size-1, source, temp, target)
+
+        //move
+        source.MakeActive(c.Board)
+        c.MoveActive(target)
+        
+        //recursive suffix
+        c.hanoi(size-1, temp, target, source)
+    }
+}
+
+//moves an active slab to the specified tower
+func (c *Root) MoveActive(t *tower) {
+    switch{
+        case c.Board.Left.Active == true:
+            if moveSlab(&c.Board.Left, t) {
+                c.Moves++
+            }
+        case c.Board.Center.Active == true:
+            if moveSlab(&c.Board.Center, t) {
+                c.Moves++
+            }
+        case c.Board.Right.Active == true:
+            if moveSlab(&c.Board.Right, t) {
+                c.Moves++
+            }
+    }
+}
+
+//ensures only the current tower is active
+func (t *tower) MakeActive(board *towers) {
+    board.Left.Active = false
+    board.Center.Active = false
+    board.Right.Active = false
+    t.Active = true
+}
+
+//set slab style based on slab number and total slabs
+func (t *tower) getAttributes(slabNum, size int) string {
+    var color string
+    if t.Active && slabNum == t.Slabs[0] {
+        color = "lightgreen"
+    } else {
+        color = "lightgray"
+    }
+    return "background-color: " + color + "; width: calc(" + strconv.Itoa(slabNum) + "*100%/" + strconv.Itoa(size) + "); border-bottom: solid 1px #adaaaa"
+}
+
+//used to ensure that the event result can be handled as an integer
+func assertIntegerResult(input interface{}) int {
+    num, err := strconv.Atoi(input.(string))
+    if err != nil {
+        panic(err)
+    }
+    return num
+}
+
+//used to move slabs, does not update moves
+func moveSlab(src, dst *tower) (madeMove bool){
+    if src != dst {
+        if len(dst.Slabs) > 0 {
+            if src.Slabs[0] < dst.Slabs[0] {
+                tmp := src.Slabs[0]
+                src.Slabs = src.Slabs[1:]
+                dst.Slabs = append([]int{tmp}, dst.Slabs...)
+                madeMove = true;
+            }
+        } else {
+            dst.Slabs = []int{src.Slabs[0]}
+            src.Slabs = src.Slabs[1:]
+            madeMove = true;
+        }
+    }
+    src.Active = false;
+    return;
+}
 </script>

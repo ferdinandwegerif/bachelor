@@ -117,34 +117,23 @@
                 towerCenter: [],
                 towerRight: []
             },
-            possibleSizes: [ 3, 5, 7, 10 ],
+            possibleSizes: [ 3, 5, 7, 10, 20 ],
             size: 3,
-            moves: 0,
-            callStack: []
+            moves: 0
         },
         methods: {
             solveHanoi: function() {
                 //Compute queue of moves and then start a timer with them
                 this.restartTower();
-                this.callStack = [];
                 this.hanoiSolution(this.size, this.towers.towerLeft, this.towers.towerRight, this.towers.towerCenter);
-                
-                /* //Interval based, looks cool but is totally pointless and processor heavy.
-                this.callStack.forEach((command,index) => {
-                    setTimeout(() => {command.func(command.param);},2500*index/(this.size*this.size*this.size));
-                });
-                */
-                // Non-interval based, less processor heavy.
-                this.callStack.forEach(command => {command.func(command.param)});
             },
             hanoiSolution: function(size, from, via, to) {
                 if (size==0) return;
 
                 this.hanoiSolution(size-1, from, to , via);
 
-                // save function calls to callStack array so that we can perform them seperately
-                this.callStack.push({ 'func' : this.$children[0].toggleActive, 'param' : from });
-                this.callStack.push({ 'func' : this.$children[0].moveActive, 'param' : via });
+                this.$children[0].toggleActive(from);
+                this.$children[0].moveActive(via);
                 
                 this.hanoiSolution(size-1, to, via, from);
             },
