@@ -13,7 +13,7 @@
             <nav class="navbar navbar-light bg-light justify-content-between">
                 <a class="navbar-brand">Tower of Hanoi</a>
                 <div style="display: contents;">
-                    <select class="custom-select" style="max-width: 20%;" v-model="size" v-on:change="restartTower"> <!-- Add vue for loop adding numbers -->
+                    <select class="custom-select" style="max-width: 20%;" v-model="size" v-on:change="restartTower">
                         <option v-for="possibility in possibleSizes">
                             {{ possibility }}
                         </option>
@@ -123,7 +123,6 @@
         },
         methods: {
             solveHanoi: function() {
-                //Compute queue of moves and then start a timer with them
                 this.restartTower();
                 this.hanoiSolution(this.size, this.towers.towerLeft, this.towers.towerRight, this.towers.towerCenter);
             },
