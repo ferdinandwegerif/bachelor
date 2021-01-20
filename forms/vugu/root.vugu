@@ -20,7 +20,7 @@
     <div class="container" id="main">
         <h4 class="display-4">Registration with Vugu</h1>
 
-            <form action="return false;" method="POST">
+            <form @click="c.HandleSubmit(event)">
 
                 <!-- First name and last name -->
                 <div class="row">
@@ -28,14 +28,16 @@
                         <div class="form-group">
                             <label for="firstname">First Name</label>
                             <vgform:Input type="text" placeholder="First Name" class="form-control" id="firstname"
-                                :Value='vgform.StringPtr{&c.firstname}'></vgform:Input>
+                                :Value='vgform.StringPtr{&c.firstname}'>
+                            </vgform:Input>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="lastname">Last Name</label>
                             <vgform:Input type="text" placeholder="Last Name" class="form-control" id="lastname"
-                            :Value='vgform.StringPtr{&c.lastname}'></vgform:Input>
+                                :Value='vgform.StringPtr{&c.lastname}'>
+                            </vgform:Input>
                         </div>
                     </div>
                 </div>
@@ -44,21 +46,24 @@
                 <div class="form-group">
                     <label for="">Username</label>
                     <vgform:Input type="text" placeholder="Username" class="form-control"
-                        :Value='vgform.StringPtr{&c.username}'></vgform:Input>
+                        :Value='vgform.StringPtr{&c.username}'>
+                    </vgform:Input>
                 </div>
 
                 <!-- Password -->
                 <div class="form-group">
                     <label for="">Password</label>
                     <vgform:Input type="password" placeholder="Password" class="form-control"
-                        :Value='vgform.StringPtr{&c.password}'></vgform:Input>
+                        :Value='vgform.StringPtr{&c.password}'>
+                    </vgform:Input>
                 </div>
 
                 <!-- Email -->
                 <div class="form-group">
                     <label for="">E-mail</label>
                     <vgform:Input type="text" placeholder="E-mail" class="form-control"
-                        :Value='vgform.StringPtr{&c.email}'></vgform:Input>
+                        :Value='vgform.StringPtr{&c.email}'>
+                    </vgform:Input>
                 </div>
 
                 <!-- Gender -->
@@ -72,7 +77,7 @@
                 </div>
 
                 <div class="field form-group">
-                    <button @click="c.HandleSubmit(event)">Submit</button>
+                    <button>Submit</button>
                 </div>
 
             </form>
@@ -150,11 +155,13 @@ func (c *Root) HandleSubmit(event vugu.DOMEvent) {
     if len(strings.TrimSpace(c.gender)) == 0 {
         c.errors = append(c.errors, "Require gender.")
     }
-    if len(c.errors) == 0 {
-        c.success = true
-    }else{
-        fmt.Println("Errors:\n%v", c.errors)
+    if len(c.errors) != 0 {
+        c.success = false
+        return
     }
+
+    c.success = true
+    /*Code where we send information to website etc */
 }
 
 </script>
