@@ -20,7 +20,7 @@
     <div class="container" id="main">
         <h4 class="display-4">Registration with Vugu</h1>
 
-            <form action="" method="POST">
+            <form action="return false;" method="POST">
 
                 <!-- First name and last name -->
                 <div class="row">
@@ -111,7 +111,11 @@
 
 <script type="application/x-go">
 
-import "github.com/vugu/vugu/vgform"
+import (
+    "github.com/vugu/vugu/vgform"
+    "strings"
+    "fmt"
+)
 
 type Root struct {
     firstname string
@@ -125,29 +129,31 @@ type Root struct {
 }
 
 func (c *Root) HandleSubmit(event vugu.DOMEvent) {
-    c.errors = []
+    c.errors = []string{}
     c.success = false
 
-    if(c.firstname == nil){
-        append(c.errors, "Requires First Name.")
+    if len(strings.TrimSpace(c.firstname)) == 0 {
+        c.errors = append(c.errors, "Requires First Name.")
     }
-    if(c.lastname == nil){
-        append(c.errors, "Requires Last Name.")
+    if len(strings.TrimSpace(c.lastname)) == 0 {
+        c.errors = append(c.errors, "Requires Last Name.")
     }
-    if(c.username == nil){
-        append(c.errors, "Requires Username.")
+    if len(strings.TrimSpace(c.username)) == 0 {
+        c.errors = append(c.errors, "Requires Username.")
     }
-    if(c.password == nil){
-        append(c.errors, "Requires Password.")
+    if len(strings.TrimSpace(c.password)) == 0 {
+        c.errors = append(c.errors, "Requires Password.")
     }
-    if(c.email == nil){
-        append(c.errors, "Requires E-Mail.")
+    if len(strings.TrimSpace(c.email)) == 0 {
+        c.errors = append(c.errors, "Requires E-Mail.")
     }
-    if(c.gender == nil){
-        append(c.errors, "Require gender.")
+    if len(strings.TrimSpace(c.gender)) == 0 {
+        c.errors = append(c.errors, "Require gender.")
     }
-    if(len(c.errors) <= 0){
+    if len(c.errors) == 0 {
         c.success = true
+    }else{
+        fmt.Println("Errors:\n%v", c.errors)
     }
 }
 
