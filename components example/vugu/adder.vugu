@@ -1,4 +1,4 @@
-<!-- static-component.vugu -->
+<!-- adder.vugu -->
 <div class="input-group mb-3">
     <div class="input-group-prepend" style="height:calc(1.5em + .75rem + 2px)">
         <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="c.Increment()">Increment</button>
@@ -7,11 +7,11 @@
 </div>
 
 <script type="application/x-go">
-type StaticComponent struct {
+type Adder struct {
     value   int
 }
 
-func (c *StaticComponent) Increment() {
+func (c *Adder) Increment() {
     c.value++
 }
 </script>

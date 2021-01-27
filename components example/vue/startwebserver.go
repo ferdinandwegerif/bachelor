@@ -8,8 +8,8 @@ import (
 func main() {
 	http.HandleFunc("/", serveFiles)
 
-	log.Println("Listening on :3000...")
-	err := http.ListenAndServe(":3000", nil)
+	log.Println("Listening on :8844...")
+	err := http.ListenAndServe(":8844", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
