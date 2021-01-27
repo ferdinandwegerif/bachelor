@@ -1,0 +1,29 @@
+<!-- root.vugu -->
+<div class="d-flex flex-column overflow-hidden min-vh-100 vh-100">
+    <header>
+        <nav class="navbar navbar-light bg-light justify-content-between">
+            <a class="navbar-brand">Static Component</a>
+            <div style="display: contents;">
+                <select class="custom-select" style="max-width: 20%;" id="inputGroupSelect04" aria-label="Example select with button addon">
+                    <option></option>
+                </select>
+                <button class="btn btn-outline-secondary">Add</button>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="flex-grow-1 overflow-auto d-flex justify-content-center">
+        <div class="card text-center" style="width: 50%; height: 80%;">
+            <div class="card-header"></div>
+            <div class="card-body d-flex flex-row align-items-stretch justify-content-around">
+                <!-- Child Component -->
+                <main:StaticComponent></main:StaticComponent>
+            </div>
+            <div class="card-footer text-muted"></div>
+        </div>
+    </main>
+</div>
+
+<script type="application/x-go">
+type Root struct {
+}
+</script>

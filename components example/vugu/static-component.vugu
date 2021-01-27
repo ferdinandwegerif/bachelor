@@ -1,0 +1,17 @@
+<!-- static-component.vugu -->
+<div class="input-group mb-3">
+    <div class="input-group-prepend" style="height:calc(1.5em + .75rem + 2px)">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="c.Increment()">Increment</button>
+    </div>
+    <input type="text" class="form-control" :value='c.value' aria-label="Recipient's username" aria-describedby="button-addon2" readonly="readonly">
+</div>
+
+<script type="application/x-go">
+type StaticComponent struct {
+    value   int
+}
+
+func (c *StaticComponent) Increment() {
+    c.value++
+}
+</script>
