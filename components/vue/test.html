@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <header class="tabs">
+            <ul>
+                <li v-for="(tab, index) in this.tabs" :key="index">
+                    <div class="nav-item">{{ tab.name }}</div>
+                </li>
+            </ul>
+        </header>
+        <main class="tab-details">
+            <slot></slot>
+        </main>
+    </div>
+</body>
+
+</html>

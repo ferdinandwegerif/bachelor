@@ -1,0 +1,59 @@
+label {
+    font-weight: bold;
+}
+
+#app {
+    width: 30%;
+    margin: 40px auto 40px auto;
+}
+
+h4 {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.tabs {
+    border-bottom: 1px solid black;
+    margin: 0 10px;
+}
+
+.tab-details {
+    padding: 10px;
+}
+
+.navigation {
+    display: flex;
+    padding: 0;
+    list-style: none;
+}
+
+.navigation li {
+    margin-right: 40px;
+    cursor: pointer;
+}
+
+.navigation li:hover {
+    color: red
+}
+
+.navigation .active {
+    font-weight: bold;
+}
+
+.profilepage{
+    display: flex;
+    justify-content: center;
+}
+.profile_box {
+    border: 1px solid black;
+    margin: 10px;
+    padding: 5px;
+    width: 225px;
+    height: 150px;
+}
+.male {
+    background-color: lightblue;
+}
+.female{
+    background-color: pink;
+}
