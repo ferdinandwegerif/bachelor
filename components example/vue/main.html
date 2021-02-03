@@ -14,7 +14,7 @@
                 <a class="navbar-brand">Dynamic Components</a>
                 <div style="display: contents;">
                     <div>
-                        <button class="btn btn-outline-secondary">1000 Components Test</button>
+                        <button class="btn btn-outline-secondary" v-on:click='test10000'>10000 Components Test</button>
                         <button class="btn btn-outline-secondary" v-on:click='incrementAll'>Increment All</button>
                         <button class="btn btn-outline-secondary" v-on:click='addAdder'>Add New</button>
                         <button class="btn btn-outline-secondary" v-on:click='removeLastAdder'>Remove Last</button>
@@ -72,7 +72,7 @@
         methods: {
             incrementAll: function() {
                 Object.values(this.$refs).forEach(adderComponent => {
-                    adderComponent[0].increment();
+                    if(adderComponent != undefined) adderComponent[0].increment();
                 });
             },
             addAdder: function() {
@@ -88,6 +88,11 @@
             },
             decrementSharedAmount: function(num) {
                 this.sharedSum -= num;
+            },
+            test10000: function() {
+                for(let i = 0; i < 10000; i++){
+                    this.addAdder();
+                }
             }
         },
         components: {

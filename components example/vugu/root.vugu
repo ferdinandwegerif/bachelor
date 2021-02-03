@@ -5,7 +5,7 @@
             <a class="navbar-brand">Dynamic Components</a>
             <div style="display: contents;">
                 <div>
-                    <button class="btn btn-outline-secondary">1000 Components Test</button>
+                    <button class="btn btn-outline-secondary" @click='c.Test10000()'>10000 Components Test</button>
                     <button class="btn btn-outline-secondary" @click='c.IncrementAll()'>Increment All</button>
                     <button class="btn btn-outline-secondary" @click='c.AddAdder()'>Add New</button>
                     <button class="btn btn-outline-secondary" @click='c.RemoveLastAdder()'>Remove Last</button>
@@ -65,5 +65,11 @@ func (c *Root) TotalSum() string {
         return strconv.Itoa(sum) + " Click Total"
     }
     return strconv.Itoa(sum) + "  Clicks Total"
+}
+
+func (c *Root) Test10000() {
+    for i:=0;i<10000;i++ {
+        c.AddAdder()
+    }
 }
 </script>
