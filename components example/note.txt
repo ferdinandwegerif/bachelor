@@ -1,0 +1,7 @@
+
+    Are the component reference types of the same type?
+    It looks like Vue components are statically referenced, as opposed to Vugu, where components are dynamically referenced.
+    Could this affect the performance metrics of the comparison?
+
+    Before implementing this in the thesis, this should be fixed.
+    DOM interactions are still equal.
