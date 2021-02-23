@@ -15,9 +15,13 @@ func main() {
 
 	wc := devutil.NewWasmCompiler().SetDir(".")
 	mux := devutil.NewMux()
-	mux.Match(devutil.NoFileExt, devutil.DefaultAutoReloadIndex.Replace(
+	rsc := devutil.DefaultAutoReloadIndex.Replace(
 		`<!-- styles -->`,
-		`<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">`))
+		`<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">`)
+	rsc = rsc.Replace(
+		`<title>Vugu App</title>`,
+		`<title>Tower of Hanoi Vugu</title>`)
+	mux.Match(devutil.NoFileExt, rsc)
 	mux.Exact("/main.wasm", devutil.NewMainWasmHandler(wc))
 	mux.Exact("/wasm_exec.js", devutil.NewWasmExecJSHandler(wc))
 	mux.Default(devutil.NewFileServer().SetDir("."))
