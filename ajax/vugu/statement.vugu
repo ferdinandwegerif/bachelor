@@ -1,0 +1,31 @@
+<!-- statement.vugu -->
+<div>
+    <main role="main" class="container text-center">
+        <h3 id="category">Example header</h3>
+        <p id="Description">Sample text to what question</p>
+        <!-- Anchor tags are buttons to which answer will be chosen -->
+        <a id="answer_1"></a>
+        <a id="answer_2"></a>
+    </main>
+</div>
+
+<script type="application/x-go">
+
+import (
+    "net/http"
+
+)
+
+
+type Statement struct {
+    category string `vugu:"data"`
+    description string `vugu:"data"`
+    answer_1 string `vugu:"data"`
+    answer_2 string `vugu:"data"`
+}
+//Takes an answer as argument, answer 1 = 1, answer 2 = 2
+func(s *Statement) submitAnswer(ans int) {
+
+}
+    
+</script>

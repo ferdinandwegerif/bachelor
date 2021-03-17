@@ -1,0 +1,42 @@
+<!-- root.vugu -->
+<div>
+    <nav>
+        <a>Submit a would you rather question.</a>
+    </nav>
+    <main role="main" class="container text-center">
+
+
+        <!-- Submission form -->
+        
+        <div class="container_submission">
+            <h3>Would you rather submission</h3>
+            <form>
+                <label for="submit_category">Category</label>
+                <input type="text" id="submit_category">
+
+                <label for="submit_description">Description</label>
+                <input type="text" id="submit_description">
+
+                <label for="answer_1">First answer</label>
+                <input type="text" id="answer_1">
+
+                <label for="answer_2">Second answer</label>
+                <input type="text" id="answer_2">
+            </form>
+        </div>
+        
+
+    </main>
+</div>
+
+<script type="application/x-go">
+
+import "time"
+
+addr := "127.0.0.1:8844"
+
+type Root struct {
+    current_statement Statement 'vugu:"data"'
+}
+    
+</script>
