@@ -11,12 +11,6 @@
 
 <script type="application/x-go">
 
-import (
-    "net/http"
-
-)
-
-
 type Statement struct {
     category string `vugu:"data"`
     description string `vugu:"data"`
@@ -25,7 +19,7 @@ type Statement struct {
 }
 //Takes an answer as argument, answer 1 = 1, answer 2 = 2
 func(s *Statement) submitAnswer(ans int) {
-
+    
 }
     
 </script>

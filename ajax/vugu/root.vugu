@@ -1,14 +1,14 @@
 <!-- root.vugu -->
 <div>
     <nav>
-        <a>Submit a would you rather question.</a>
+        <a >Submit a would you rather question.</a>
     </nav>
     <main role="main" class="container text-center">
 
-
+        
         <!-- Submission form -->
         
-        <div class="container_submission">
+        <div class="container_submission" hidden>
             <h3>Would you rather submission</h3>
             <form>
                 <label for="submit_category">Category</label>
@@ -24,19 +24,42 @@
                 <input type="text" id="answer_2">
             </form>
         </div>
-        
-
     </main>
 </div>
 
 <script type="application/x-go">
 
-import "time"
-
-addr := "127.0.0.1:8844"
+import (
+    "net/http"
+    "fmt"
+    "io"
+)
 
 type Root struct {
-    current_statement Statement 'vugu:"data"'
+    current_statement string
+    show_submission bool
+}
+
+func (c *Root) Init() {
+    c.show_submission = false
+    c.APITest()
+}
+
+func (c *Root) APITest(){
+    fmt.Println("Sending Request...")
+    resp,err := http.Get("127.0.0.1:8844/testing")
+    
+    if err != nil {
+	// handle error
+        fmt.Println(err)
+    }
+    defer resp.Body.Close()
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+	// handle error
+        fmt.Println(err,body)
+    }
+
 }
     
 </script>
