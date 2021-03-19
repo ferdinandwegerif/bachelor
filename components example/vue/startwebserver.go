@@ -9,7 +9,7 @@ func main() {
 	http.HandleFunc("/", serveFiles)
 
 	log.Println("Listening on :3000...")
-	err := http.ListenAndServe(":3000", nil)
+	err := http.ListenAndServe("127.0.0.1:3000", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
