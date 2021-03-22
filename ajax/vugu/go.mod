@@ -1,4 +1,4 @@
-module github.com/vugu-examples/simple
+module github.com/vugu-examples/ajax
 
 go 1.14
 
