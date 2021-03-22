@@ -1,0 +1,63 @@
+/* 
+Black Coffee(background) - #322A26 
+
+Medium Turquoise(blue) - #6DD3CE
+Cinnabar(red) - #DB4C40
+
+Yellow Crayola (Other) - #FFF07C
+
+Manatee (Grey, Header, Footer) - #9F9AA4
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Della+Respira&display=swap');
+* {
+    font-family: 'Della Respira', serif;
+}
+
+header,
+footer {
+    background-color: #847996;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+footer {
+    margin-top: 40px;
+    height: 30px;
+    line-height: 30px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.header_text {
+    background-color: #DB4C40;
+}
+
+#main-wrapper {
+    background-color: #221D23;
+}
+
+.options {
+    background-color: #6DD3CE;
+    font-size: 1.2em;
+    padding: 10px;
+    color: black;
+}
+
+#description {
+    background-color: #FFF07C;
+    font-size: 1.5em;
+    margin: 20px -20px;
+}
+
+.header_text,
+#description {
+    text-align: center;
+    border-radius: 5px;
+    padding: 20px;
+}
