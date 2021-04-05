@@ -16,7 +16,7 @@ func main() {
 	log.Printf("Starting HTTP Server at %q", l)
 	wd, err := os.Getwd()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(wd, err)
 	}
 	server := api.NewServer(wd)
 	log.Fatal(http.ListenAndServe(l, server.Router))

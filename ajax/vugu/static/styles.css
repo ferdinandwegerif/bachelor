@@ -61,3 +61,11 @@ footer {
     border-radius: 5px;
     padding: 20px;
 }
+
+#stats1,
+#stats2 {
+    font-size: 1.3em;
+    background-color: #DB4C40;
+    border-radius: 5px;
+    border: 1px solid black;
+}

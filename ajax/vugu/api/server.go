@@ -2,6 +2,8 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 
 	t "github.com/vugu-examples/ajax/types"
@@ -29,16 +31,26 @@ func NewServer(dir string) *Server {
 }
 
 func (s *Server) initRoutes() {
-	s.Router.Exact("/api/allStatements", http.Handler(s.getStatements()))
+	s.Router.Exact("/api/allStatements", s.getStatements())
+	s.Router.Exact("/api/newStatement", s.submitQuestion())
+	s.Router.Exact("/api/submitAnswer", s.submitAnswer())
+	/* 	s.HandleFunc("/api/allStatements", s.getStatements()).Methods("GET")
+	   	s.HandleFunc("/api/getStatement/{id}", s.getStatement()).Methods("GET")
+	   	s.HandleFunc("/api/newStatement", s.submitQuestion()).Methods("POST")
+	   	s.HandleFunc("/api/submitAnswer", s.submitAnswerToQuestion()).Methods("POST") */
+	//s.HandleFunc("api/getAnswers", s.)
+
+	/* s.Exact("/api/allStatements", http.Handler(s.getStatements())) */
 }
 
 func (s *Server) initWasm(dir string) {
+	fmt.Println("initializing webassembly files")
 	wc := devutil.NewWasmCompiler().SetDir(dir)
 	s.Router.Match(devutil.NoFileExt, devutil.DefaultAutoReloadIndex.Replace(
 		`<!-- styles -->`,
 		`<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/static/styles.css">
-		`))
+	`))
 	s.Router.Exact("/main.wasm", devutil.NewMainWasmHandler(wc))
 	s.Router.Exact("/wasm_exec.js", devutil.NewWasmExecJSHandler(wc))
 	s.Router.Default(devutil.NewFileServer().SetDir(dir))
@@ -52,8 +64,11 @@ func (s *Server) submitQuestion() http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		statement.ID = len(s.statements.List)
-		s.statements.AddStatement(statement)
+		err = s.statements.AddStatement(statement)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		log.Println("Added new statement to the server...")
 
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(statement)
@@ -64,7 +79,7 @@ func (s *Server) submitQuestion() http.HandlerFunc {
 	}
 }
 
-func (s *Server) submitAnswerToQuestion() http.HandlerFunc {
+func (s *Server) submitAnswer() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		var answer struct {
@@ -81,6 +96,7 @@ func (s *Server) submitAnswerToQuestion() http.HandlerFunc {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
+		log.Printf("Server received answer\n-----\nQuestion ID: %d\nSelected answer: %d\n", answer.ID, answer.Answer)
 
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(answer)
@@ -101,10 +117,11 @@ func (s Server) getStatements() http.HandlerFunc {
 	}
 }
 
-func (s Server) getStatement() http.HandlerFunc {
+/* func (s Server) getStatement() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var id int
-		err := json.NewDecoder(r.Body).Decode(&id)
+		idstr := mux.Vars(r)["id"]
+		id, err := strconv.Atoi(idstr)
+		fmt.Println("Statement id that is requested:", id)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -122,4 +139,4 @@ func (s Server) getStatement() http.HandlerFunc {
 			return
 		}
 	}
-}
+} */

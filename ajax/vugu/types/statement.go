@@ -8,8 +8,8 @@ type Statement struct {
 	Answer_1    string
 	Answer_2    string
 	/* The amount of votes on this statement/question */
-	cntAns1 int
-	cntAns2 int
+	CntAns1 int
+	CntAns2 int
 }
 
 func NewStatement(id int, desc string, ans1 string, ans2 string) *Statement {
@@ -18,8 +18,8 @@ func NewStatement(id int, desc string, ans1 string, ans2 string) *Statement {
 		Description: desc,
 		Answer_1:    ans1,
 		Answer_2:    ans2,
-		cntAns1:     0,
-		cntAns2:     0,
+		CntAns1:     0,
+		CntAns2:     0,
 	}
 }
 
@@ -35,9 +35,9 @@ func (s *Statement) AddAnswer(nr int) error {
 	var err error
 	switch nr {
 	case 1:
-		s.cntAns1++
+		s.CntAns1++
 	case 2:
-		s.cntAns2++
+		s.CntAns2++
 	default:
 		err = errors.New("not valid data, only 2 available questions")
 	}

@@ -1,2 +1,24 @@
+### List all of the statements
 GET http://127.0.0.1:8844/api/allStatements
 
+### Specific statement
+GET http://127.0.0.1:8844/api/getStatement/2
+
+### Create new statement
+POST http://127.0.0.1:8844/api/newStatement
+Content-Type: application/json
+
+{
+    "description": "Testing question123?",
+    "answer_1":"Testing",
+    "answer_2":"Testing2"
+}
+
+### Post answer to a statement
+POST http://127.0.0.1:8844/api/submitAnswer
+Content-Type: application/json
+
+{
+    "ID": 1,
+    "Answer": 2
+}

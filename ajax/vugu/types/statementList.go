@@ -3,7 +3,6 @@ package types
 import (
 	"errors"
 	"fmt"
-	"log"
 )
 
 type StatementList struct {
@@ -17,8 +16,8 @@ func NewStatementList() *StatementList {
 func (s *StatementList) AddStatement(statement Statement) error {
 	var err error
 	if statement.isValid() {
+		statement.ID = s.getNextID()
 		s.List = append(s.List, statement)
-		log.Println("Added new statement to the server...")
 	} else {
 		err = errors.New("failed to add new statement")
 	}
@@ -26,33 +25,29 @@ func (s *StatementList) AddStatement(statement Statement) error {
 }
 
 //Returns a statement with the given index
-func (s StatementList) GetStatementByIndex(i int) (*Statement, error) {
-	var statement Statement
+func (s *StatementList) GetStatementByIndex(i int) (*Statement, error) {
 	var err error
-
-	if s.isIndexValid(i) {
-		statement = s.List[i]
+	if s.IsIndexValid(i) {
+		return &s.List[i], err
 	} else {
 		err = errors.New("index is not valid")
+		return nil, err
 	}
-	return &statement, err
 }
 
-func (s StatementList) GetStatementByID(id int) (*Statement, error) {
-	var statement Statement
+func (s *StatementList) GetStatementByID(id int) (*Statement, error) {
 	var err error
-
-	for _, statement = range s.List {
+	for i, statement := range s.List {
 		if statement.ID == id {
-			return &statement, err
+			return &s.List[i], err
 		}
 	}
 	err = errors.New("couldn't find the statement with the given ID")
-	return &statement, err
+	return nil, err
 }
 
 //Checks if statement at index can be retrieved
-func (s StatementList) isIndexValid(i int) bool {
+func (s StatementList) IsIndexValid(i int) bool {
 	if i >= 0 && i < len(s.List) {
 		return true
 	}
@@ -78,5 +73,11 @@ func (s *StatementList) AddToStatement(id int, answer int) error {
 	if err != nil {
 		return err
 	}
-	return statement.AddAnswer(answer)
+	err = statement.AddAnswer(answer)
+	return err
+}
+
+func (s StatementList) getNextID() int {
+	currentID := len(s.List)
+	return currentID + 1
 }

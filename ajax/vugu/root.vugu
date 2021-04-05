@@ -19,24 +19,46 @@
         <h1 class="container header_text">Would you rather...</h1>
         <div class="container" style="width: 75%;">
             <div class="container">
-                <div id="description">
-                    Would you rather go into the past and meet your ancestors or go into the future and meet your great-great grandchildren?
-                </div>
+                <div id="description" vg-content="c.Statement.Description"></div>
             </div>
             <div class="container">
                 <div class="row align-items-center">
+
                     <div role="button" class="col options mr-md-3 btn btn-primary">
-                        <div id=" option_1 ">
-                            Go into the past.
-                        </div>
+                        <div id="option_1" vg-content="c.Statement.Answer_1" @click="c.Reveal(1)"></div>
                     </div>
-                    <a class="next_statement btn btn-primary col-1 h-50 ">Next</a>
-                    <div role="button " class="col options ml-md-3 btn btn-primary">
-                        <div id="option_2 ">
-                            Go into the future.
+
+                    <!-- <a class="next_statement btn btn-primary col-2 h-50 mr-1" @click="c.New(-1)">Previous</a> -->
+                    <a class="next_statement btn btn-primary col-2 h-50 ml-1" @click="c.New(1)">Next</a>
+
+                    <div role="button" class="col options ml-md-3 btn btn-primary">
+                        <div id="option_2" vg-content="c.Statement.Answer_2" @click="c.Reveal(2)"></div>
+                    </div>
+
+                </div>
+
+                <div vg-if="c.Answered()">
+                    <div class="row align-items-center">
+                        <div class="col mr-md-3 mt-3" id="stats1">
+                            <div vg-if="c.Answer == 1">
+                                You picked option 1, with <span vg-content="c.Statement.CntAns1"></span> other people.
+                            </div>
+                            <div vg-if="c.Answer == 2">
+                                <span vg-content="c.Statement.CntAns1"></span> people chose option 1.
+                            </div>
+                        </div>
+                        <div class="col-4"></div>
+                        <div class="col ml-md-3 mt-3" id="stats2">
+                            <div vg-if="c.Answer == 2">
+                                You picked option 2, with <span vg-content="c.Statement.CntAns2"></span> other people.
+                            </div>
+                            <div vg-if="c.Answer == 1">
+                                <span vg-content="c.Statement.CntAns2"></span> people chose option 2.
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -46,18 +68,18 @@
             <h3>Would you rather submission</h3>
             <form>
                 <label for="submit_category ">Category</label>
-                <input type="text " id="submit_category ">
+                <input type="text" id="submit_category">
 
                 <label for="submit_description ">Description</label>
-                <input type="text " id="submit_description ">
+                <input type="text" id="submit_description">
 
                 <label for="answer_1 ">First answer</label>
-                <input type="text " id="answer_1 ">
+                <input type="text" id="answer_1">
 
                 <label for="answer_2 ">Second answer</label>
-                <input type="text " id="answer_2 ">
+                <input type="text" id="answer_2">
 
-                <a @click="c.APITest(event) " id="btnSubmit ">Submit</a>
+                <a id="btnSubmit">Submit</a>
             </form>
         </div>
     </main>
