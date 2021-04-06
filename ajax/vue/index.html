@@ -81,23 +81,33 @@
             </div>
 
 
+
             <!-- Submission form -->
-            <div v-if="submit_form" class="container_submission ">
+            <div v-if="submit_form" class="container_submission">
                 <h3>Would you rather submission</h3>
-                <form>
-                    <label for="submit_category ">Category</label>
-                    <input type="text" id="submit_category">
 
-                    <label for="submit_description ">Description</label>
-                    <input type="text" id="submit_description">
+                <form action="" method="POST" @submit="commitQuestion">
 
-                    <label for="answer_1 ">First answer</label>
-                    <input type="text" id="answer_1">
+                    <div class="form-group">
+                        <label for="submit_description">Description</label>
+                        <input type="text" placeholder="Description" class="form-control" id="submit_description" v-model="form_question.Description">
+                    </div>
 
-                    <label for="answer_2 ">Second answer</label>
-                    <input type="text" id="answer_2">
 
-                    <a id="btnSubmit">Submit</a>
+                    <div class="form-group">
+                        <label for="answer_1 ">First answer</label>
+                        <input type="text" placeholder="First Answer" class="form-control" id="form_answer_1" v-model="form_question.Answer_1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="answer_2 ">Last answer</label>
+                        <input type="text" placeholder="Last Answer" class="form-control" id="form_answer_2" v-model="form_question.Answer_2">
+                    </div>
+
+                    <div class="field form-group">
+                        <input type="submit" value="Submit">
+                    </div>
+
                 </form>
             </div>
         </main>
@@ -115,7 +125,13 @@
             statements: [],
             submit_form: false,
             currentStatement: 0,
-            answered: 0
+            answered: 0,
+            form_question: {
+                'ID': 0,
+                'Description': '',
+                'Answer_1': '',
+                'Answer_2': ''
+            }
         },
         mounted() {
             this.getAllStatements()
@@ -157,6 +173,22 @@
                     console.log(data)
                 })
             },
+            commitQuestion: function(e) {
+                e.preventDefault()
+                console.log(this.form_question)
+                fetch("/api/newStatement", {
+                        method: 'post',
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify(this.form_question)
+                    })
+                    .then(Response => Response.json())
+                    .then((data) => {
+                        console.log(data)
+                    })
+                this.resetForm()
+            },
             getAllStatements: function() {
                 fetch("/api/allStatements")
                     .then(Response => Response.json())
@@ -178,6 +210,11 @@
                     return true
                 }
                 return false
+            },
+            resetForm: function() {
+                this.form_question.Description = ''
+                this.form_question.Answer_1 = ''
+                this.form_question.Answer_2 = ''
             }
         },
         computed: {

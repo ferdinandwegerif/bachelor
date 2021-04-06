@@ -69,3 +69,12 @@ footer {
     border-radius: 5px;
     border: 1px solid black;
 }
+
+.container_submission {
+    background-color: #FFF07C;
+    width: 50%;
+    margin: 10px auto;
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: 1px solid black;
+}

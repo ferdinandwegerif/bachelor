@@ -45,8 +45,9 @@ func (s *Server) submitQuestion() http.HandlerFunc {
 		err = s.statements.AddStatement(statement)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+		} else {
+			log.Println("Added new statement to the server...")
 		}
-		log.Println("Added new statement to the server...")
 
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(statement)
