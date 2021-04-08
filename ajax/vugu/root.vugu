@@ -1,65 +1,93 @@
 <!-- root.vugu -->
-<div>
-    <nav>
-        <a >Submit a would you rather question.</a>
-    </nav>
-    <main role="main" class="container text-center">
+<div id="main-wrapper" class="container-maxwidth min-vh-100">
 
-        
+    <header class="container-fluid header_box">
+        <nav class="navbar navbar-light justify-content-between">
+            <a class="navbar-brand">Would you rather...</a>
+            <div style="display: contents;">
+                <div>
+                    <button class="btn-secondary" @click="c.toggleForm(event)">Submit</button>
+                    <button class="btn-secondary">Feedback</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+    <main class="container">
+        <h1 class="container header_text">Would you rather...</h1>
+        <div class="container" style="width: 75%;">
+            <div class="container">
+                <div id="description" vg-content="c.Statement.Description"></div>
+            </div>
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div role="button" class="col options mr-md-3 btn btn-primary">
+                        <div id="option_1" vg-content="c.Statement.Answer_1" @click="c.Reveal(1)"></div>
+                    </div>
+
+                    <!-- <a class="next_statement btn btn-primary col-2 h-50 mr-1" @click="c.New(-1)">Previous</a> -->
+                    <a class="next_statement btn btn-primary col-2 h-50 ml-1" @click="c.New(1)">Next</a>
+
+                    <div role="button" class="col options ml-md-3 btn btn-primary">
+                        <div id="option_2" vg-content="c.Statement.Answer_2" @click="c.Reveal(2)"></div>
+                    </div>
+
+                </div>
+
+                <div vg-if="c.Answered()">
+                    <div class="row align-items-center">
+                        <div class="col mr-md-3 mt-3" id="stats1">
+                            <div vg-if="c.Answer == 1">
+                                You picked option 1, with <span vg-content="c.Statement.CntAns1"></span> other people.
+                            </div>
+                            <div vg-if="c.Answer == 2">
+                                <span vg-content="c.Statement.CntAns1"></span> people chose option 1.
+                            </div>
+                        </div>
+                        <div class="col-4"></div>
+                        <div class="col ml-md-3 mt-3" id="stats2">
+                            <div vg-if="c.Answer == 2">
+                                You picked option 2, with <span vg-content="c.Statement.CntAns2"></span> other people.
+                            </div>
+                            <div vg-if="c.Answer == 1">
+                                <span vg-content="c.Statement.CntAns2"></span> people chose option 2.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
         <!-- Submission form -->
-        
-        <div class="container_submission" hidden>
+        <div vg-if="c.Show_submission " class="container_submission ">
             <h3>Would you rather submission</h3>
             <form>
-                <label for="submit_category">Category</label>
+                <label for="submit_category ">Category</label>
                 <input type="text" id="submit_category">
 
-                <label for="submit_description">Description</label>
+                <label for="submit_description ">Description</label>
                 <input type="text" id="submit_description">
 
-                <label for="answer_1">First answer</label>
+                <label for="answer_1 ">First answer</label>
                 <input type="text" id="answer_1">
 
-                <label for="answer_2">Second answer</label>
+                <label for="answer_2 ">Second answer</label>
                 <input type="text" id="answer_2">
+
+                <a id="btnSubmit">Submit</a>
             </form>
         </div>
     </main>
+
+    <footer class="footer footer-fixed-bottom ">
+        Copyright...
+    </footer>
 </div>
 
-<script type="application/x-go">
-
-import (
-    "net/http"
-    "fmt"
-    "io"
-)
-
-type Root struct {
-    current_statement string
-    show_submission bool
-}
-
-func (c *Root) Init() {
-    c.show_submission = false
-    c.APITest()
-}
-
-func (c *Root) APITest(){
-    fmt.Println("Sending Request...")
-    resp,err := http.Get("127.0.0.1:8844/testing")
-    
-    if err != nil {
-	// handle error
-        fmt.Println(err)
-    }
-    defer resp.Body.Close()
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-	// handle error
-        fmt.Println(err,body)
-    }
-
-}
-    
+<script type="application/x-go ">
 </script>
