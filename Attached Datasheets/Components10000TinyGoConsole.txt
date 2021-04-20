@@ -1,0 +1,104 @@
+TinygoCompiler: Successful generate
+TinygoCompiler: Successful generate
+TinygoCompiler: Successful cmd: [go get -u github.com/vugu/vugu github.com/vugu/vjson]; output:
+TinygoCompiler: Successful cmd: [go get -u github.com/vugu/vugu github.com/vugu/vjson]; output:
+TinygoCompiler: Successful cmd: [go get -u -x github.com/vugu/vjson github.com/vugu/html github.com/vugu/xxhash]; output: cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git config remote.origin.url
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git pull --ff-only
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git submodule update --init --recursive
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git show-ref
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git submodule update --init --recursive
+cd .
+git clone -- https://github.com/vugu/html /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git submodule update --init --recursive
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git show-ref
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git submodule update --init --recursive
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git config remote.origin.url
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git config remote.origin.url
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git pull --ff-only
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git submodule update --init --recursive
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git show-ref
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git submodule update --init --recursive
+WORK=/tmp/go-build248891782
+mkdir -p $WORK/b042/
+cat >$WORK/b042/importcfg << 'EOF' # internal
+# import config
+EOF
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html/atom
+/usr/lib/go-1.15/pkg/tool/linux_amd64/compile -o $WORK/b042/_pkg_.a -trimpath "$WORK/b042=>" -p github.com/vugu/html/atom -complete -buildid i8LtOTnVElfa6yPesc19/i8LtOTnVElfa6yPesc19 -goversion go1.15.2 -D "" -importcfg $WORK/b042/importcfg -pack -c=4 ./atom.go ./table.go
+/usr/lib/go-1.15/pkg/tool/linux_amd64/buildid -w $WORK/b042/_pkg_.a # internal
+mkdir -p $WORK/b043/
+mkdir -p /tmp/TinygoCompiler729610504/pkg/linux_amd64/github.com/vugu/
+cp /home/ferdi/.cache/go-build/d6/d6bc019f8eef68a4e949bed356080c635469a4aa9cf1fc9f8390c9054237e6ee-d /tmp/TinygoCompiler729610504/pkg/linux_amd64/github.com/vugu/xxhash.a
+rm -r $WORK/b043/
+cp $WORK/b042/_pkg_.a /home/ferdi/.cache/go-build/39/395a4d7225618fdb45f31d8d84b94e2832b39a1cf7b87576c4417fbcf1b455da-d # internal
+mkdir -p $WORK/b040/
+cat >$WORK/b040/importcfg << 'EOF' # internal
+# import config
+packagefile bufio=/usr/lib/go-1.15/pkg/linux_amd64/bufio.a
+packagefile bytes=/usr/lib/go-1.15/pkg/linux_amd64/bytes.a
+packagefile errors=/usr/lib/go-1.15/pkg/linux_amd64/errors.a
+packagefile fmt=/usr/lib/go-1.15/pkg/linux_amd64/fmt.a
+packagefile github.com/vugu/html/atom=$WORK/b042/_pkg_.a
+packagefile io=/usr/lib/go-1.15/pkg/linux_amd64/io.a
+packagefile sort=/usr/lib/go-1.15/pkg/linux_amd64/sort.a
+packagefile strconv=/usr/lib/go-1.15/pkg/linux_amd64/strconv.a
+packagefile strings=/usr/lib/go-1.15/pkg/linux_amd64/strings.a
+packagefile unicode/utf8=/usr/lib/go-1.15/pkg/linux_amd64/unicode/utf8.a
+EOF
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+/usr/lib/go-1.15/pkg/tool/linux_amd64/compile -o $WORK/b040/_pkg_.a -trimpath "$WORK/b040=>" -p github.com/vugu/html -complete -buildid qDXOJW39mlZtQP-UVNn4/qDXOJW39mlZtQP-UVNn4 -goversion go1.15.2 -D "" -importcfg $WORK/b040/importcfg -pack -c=4 ./const.go ./doc.go ./doctype.go ./entity.go ./escape.go ./foreign.go ./line-counter.go ./node.go ./parse.go ./render.go ./token.go
+/usr/lib/go-1.15/pkg/tool/linux_amd64/buildid -w $WORK/b040/_pkg_.a # internal
+cp $WORK/b040/_pkg_.a /home/ferdi/.cache/go-build/8b/8b087245a74e848a75b609961a99987a897aa266fac2d2a5edb2897305050890-d # internal
+mv $WORK/b040/_pkg_.a /tmp/TinygoCompiler729610504/pkg/linux_amd64/github.com/vugu/html.a
+rm -r $WORK/b040/
+
+TinygoCompiler: Successful cmd: [go get -u -x github.com/vugu/vjson github.com/vugu/html github.com/vugu/xxhash]; output: cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git config remote.origin.url
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git pull --ff-only
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git submodule update --init --recursive
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git show-ref
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/vjson
+git submodule update --init --recursive
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git config remote.origin.url
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git pull --ff-only
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git submodule update --init --recursive
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git show-ref
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git submodule update --init --recursive
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/html
+git config remote.origin.url
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git config remote.origin.url
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git pull --ff-only
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git submodule update --init --recursive
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git show-ref
+cd /tmp/TinygoCompiler729610504/src/github.com/vugu/xxhash
+git submodule update --init --recursive
+WORK=/tmp/go-build886000415
+
+TinygoCompiler: successful build: tinygo [build -o /tmp/TinygoCompiler729610504/bin/tgwasmout123118737 -target=wasm github.com/vugu-examples/simple]; output:
+TinygoCompiler: successful build: tinygo [build -o /tmp/TinygoCompiler729610504/bin/tgwasmout395523271 -target=wasm github.com/vugu-examples/simple]; output:
