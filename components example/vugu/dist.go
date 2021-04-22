@@ -55,7 +55,7 @@ func main() {
 
 	// BUILD GO SERVER:
 	// or if you are deploying a Go server (yay!) you can build that binary here
-	fmt.Print(distutil.MustExec("go", "build", "-o", filepath.Join(*dist, "server"), "."))
+	// fmt.Print(distutil.MustExec("go", "build", "-o", filepath.Join(*dist, "server"), "."))
 
 	log.Printf("dist.go complete in %v", time.Since(start))
 }
