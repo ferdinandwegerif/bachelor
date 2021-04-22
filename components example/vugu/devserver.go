@@ -13,7 +13,9 @@ func main() {
 	l := "127.0.0.1:8844"
 	log.Printf("Starting HTTP Server at %q", l)
 
+	//WASM Compiler and requirements
 	wc := devutil.NewWasmCompiler().SetDir(".")
+
 	mux := devutil.NewMux()
 	rsc := devutil.DefaultAutoReloadIndex.Replace(
 		`<!-- styles -->`,

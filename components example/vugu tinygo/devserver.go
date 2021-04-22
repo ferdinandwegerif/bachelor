@@ -13,9 +13,12 @@ func main() {
 	l := "127.0.0.1:8844"
 	log.Printf("Starting HTTP Server at %q", l)
 
+	//TinyGo Compiler and requirements
 	wc := devutil.MustNewTinygoCompiler().SetDir(".")
 	defer wc.Close()
 	wc.AddGoGet("go get -u github.com/vugu/vugu github.com/vugu/vjson")
+
+	//Required to avoid calling TinyGo with Docker
 	wc.NoDocker()
 	wc.AddGoGet("go get -u -x github.com/vugu/vjson github.com/vugu/html github.com/vugu/xxhash")
 
@@ -25,7 +28,7 @@ func main() {
 		`<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">`)
 	rsc = rsc.Replace(
 		`<title>Vugu App</title>`,
-		`<title>Dynamic Component Vugu</title>`)
+		`<title>Dynamic Component Vugu TinyGo</title>`)
 	mux.Match(devutil.NoFileExt, rsc)
 	mux.Exact("/main.wasm", devutil.NewMainWasmHandler(wc))
 	mux.Exact("/wasm_exec.js", devutil.NewWasmExecJSHandler(wc))
