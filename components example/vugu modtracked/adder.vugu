@@ -12,6 +12,12 @@ type Adder struct {
 }
 
 func (c *Adder) Increment() {
+    fmt.Println("Child Incremented")
     c.value++
+}
+
+func (c *Adder) ModCheck(mt *ModTracker, oldData interface{}) (isModified bool, newData interface{}) {
+    fmt.Println("Child Accessed To Detect Changes")
+    return true, *c
 }
 </script>

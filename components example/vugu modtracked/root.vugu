@@ -72,4 +72,9 @@ func (c *Root) Test10000() {
         c.AddAdder()
     }
 }
+
+func (c *Root) ModCheck(mt *vugu.ModTracker, oldData interface{}) (isModified bool, newData interface{}) {
+    fmt.Println("Parent Accessed To Detect Changes")
+    return true, *c
+}
 </script>
