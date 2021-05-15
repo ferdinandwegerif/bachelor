@@ -1,6 +1,0 @@
-
-    Vue contains a Component for each tower, Vugu does not. Will this affect performance testing?
-    Ideally performance testing for the frameworks should use the same algorithm as well, currently they do not.
-
-    Before implementing this in the thesis, this should be fixed.
-    DOM interactions are still equal.

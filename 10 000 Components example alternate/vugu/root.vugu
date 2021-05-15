@@ -1,0 +1,72 @@
+<!-- root.vugu -->
+<div class="d-flex flex-column overflow-hidden min-vh-100 vh-100">
+    <header>
+        <nav class="navbar navbar-light bg-light justify-content-between">
+            <a class="navbar-brand">Dynamic Components</a>
+            <div style="display: contents;">
+                <div>
+                    <button class="btn btn-outline-secondary" @click='c.Test10000()'>10000 Components Test</button>
+                    <button class="btn btn-outline-secondary" @click='c.IncrementAll()'>Increment All</button>
+                    <button class="btn btn-outline-secondary" @click='c.AddAdder()'>Add New</button>
+                    <button class="btn btn-outline-secondary" @click='c.RemoveLastAdder()'>Remove Last</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="flex-grow-1 overflow-auto d-flex justify-content-center">
+        <div class="card text-center" style="width: 50%; height: 80%;">
+            <div class="card-header">Results from 10000 Components Test</div>
+            <div class="card-body d-flex flex-column align-items-stretch justify-content-around flex-nowrap" style="overflow-Y: scroll">
+                <!-- Child Components -->
+                <div vg-for='_, adder := range c.AdderComponents'>
+                    <vg-comp expr="adder"></vg-comp>
+                </div>
+            </div>
+            <div class="card-footer text-muted" vg-content='c.TotalSum()'></div>
+        </div>
+    </main>
+</div>
+
+<script type="application/x-go">
+
+import "strconv"
+
+type Root struct {
+    AdderComponents  []*Adder
+    SharedSum        int
+}
+
+func (c *Root) Init() {
+    c.AdderComponents = make([]*Adder, 0, 5)
+    c.sharedSum = 0
+}
+
+func (c *Root) AddAdder() {
+    c.AdderComponents = append(c.AdderComponents, &Adder{value:0, root:c})
+}
+
+func (c *Root) IncrementAll() {
+    for _, adder := range c.AdderComponents {
+        adder.Increment()
+    }
+}
+
+func (c *Root) RemoveLastAdder() {
+    if len(c.AdderComponents) > 0 {
+        c.AdderComponents = c.AdderComponents[:len(c.AdderComponents)-1]
+    }
+}
+
+func (c *Root) TotalSum() string {
+    if c.sharedSum == 1 {
+        return strconv.Itoa(c.sharedSum) + " Click Total"
+    }
+    return strconv.Itoa(c.sharedSum) + "  Clicks Total"
+}
+
+func (c *Root) Test10000() {
+    for i:=0;i<10000;i++ {
+        c.AddAdder()
+    }
+}
+</script>

@@ -1,0 +1,23 @@
+<!-- adder.vugu -->
+<div class="input-group mb-3">
+    <div class="input-group-prepend" style="height:calc(1.5em + .75rem + 2px)">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="c.Increment()">Increment</button>
+    </div>
+    <input type="text" class="form-control" :value='c.value' aria-label="Recipient's username" aria-describedby="button-addon2" readonly="readonly">
+</div>
+
+<script type="application/x-go">
+type Adder struct {
+    value   int
+}
+
+func (c *Adder) Increment() {
+    fmt.Println("Child Incremented")
+    c.value++
+}
+
+func (c *Adder) ModCheck(mt *ModTracker, oldData interface{}) (isModified bool, newData interface{}) {
+    fmt.Println("Child Accessed To Detect Changes")
+    return true, *c
+}
+</script>
