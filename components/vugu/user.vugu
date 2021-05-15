@@ -1,0 +1,17 @@
+<div class="profile_box" :class="gender">
+    <h3 vg-content="c.firstname c.lastname"></h3>
+    <p vg-content="Username c.username"></p>
+</div>
+
+
+
+<script type="application/x-go">
+type User struct {
+    firstname   string
+    lastname    string
+    username    string
+    password    string
+    email       string
+    gender      string
+}
+</script>

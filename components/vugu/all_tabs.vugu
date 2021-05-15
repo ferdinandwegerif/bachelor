@@ -1,0 +1,49 @@
+<div>\
+    <header class="tabs">
+        <ul class="navigation">
+            <li v-for="(tab, index) in this.tabs" :key="index">
+                <div class="nav-item"
+                    v-bind:class="{ active: tab.active }"
+                        @click="selectTab(tab)">
+                    {{ tab.name }}
+                </div>
+            </li>
+        </ul>
+    </header>
+    <main class="tab-details">
+        <slot></slot>
+    </main>
+</div>
+
+let all_tabs = Vue.component('tab-list', {
+        data: function () {
+            return {
+                tabs: []
+            }
+        },
+        created: function () {
+            this.tabs = this.$children;
+        },
+        template: 
+        '',
+        methods:{
+            selectTab: function(selectedTab){
+                this.tabs.forEach(tab => {
+                    tab.active = tab.name === selectedTab.name;
+                });
+            }
+        }
+    })
+<script type="application/x-go">
+type Tabs struct {
+    tabs    []Tab
+}
+
+
+func (c *Tabs) selectTab(selectedTab){
+    this.tabs.forEach(tab => {
+        tab.active = tab.name === selectedTab.name;
+    });
+}
+
+</script>

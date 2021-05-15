@@ -1,0 +1,114 @@
+{
+    "GET_EXAMPLE": {
+        "Vugu": [
+            {
+                "Request sent(microseconds)": "72",
+                "Waiting(TTFB)(milliseconds)": "0.89",
+                "Content Download (milliseconds)": "1.12"
+            },
+            {
+                "Request sent(microseconds)": "75",
+                "Waiting(TTFB)(milliseconds)": "0.74",
+                "Content Download (milliseconds)": "0.95"
+            },
+            {
+                "Request sent(microseconds)": "72",
+                "Waiting(TTFB)(milliseconds)": "0.90",
+                "Content Download (milliseconds)": "0.99"
+            },
+            {
+                "Request sent(microseconds)": "74",
+                "Waiting(TTFB)(milliseconds)": "0.71",
+                "Content Download (milliseconds)": "0.89"
+            },
+            {
+                "Request sent(microseconds)": "74",
+                "Waiting(TTFB)(milliseconds)": "0.79",
+                "Content Download (milliseconds)": "0.84"
+            }
+        ],
+        "Vue": [
+            {
+                "Request sent(microseconds)": "50",
+                "Waiting(TTFB)(milliseconds)": "0.63",
+                "Content Download (milliseconds)": "0.74"
+            },
+            {
+                "Request sent(microseconds)": "76",
+                "Waiting(TTFB)(milliseconds)": "0.78",
+                "Content Download (milliseconds)": "0.81"
+            },
+            {
+                "Request sent(microseconds)": "59",
+                "Waiting(TTFB)(milliseconds)": "0.65",
+                "Content Download (milliseconds)": "0.77"
+            },
+            {
+                "Request sent(microseconds)": "84",
+                "Waiting(TTFB)(milliseconds)": "0.81",
+                "Content Download (milliseconds)": "0.84"
+            },
+            {
+                "Request sent(microseconds)": "77",
+                "Waiting(TTFB)(milliseconds)": "0.66",
+                "Content Download (milliseconds)": "0.73"
+            }
+        ]
+    },
+    "POST_EXAMPLE": {
+        "Vugu": [
+            {
+                "Request sent(microseconds)": "61",
+                "Waiting(TTFB)(milliseconds)": "0.62",
+                "Content Download (milliseconds)": "0.83"
+            },
+            {
+                "Request sent(microseconds)": "72",
+                "Waiting(TTFB)(milliseconds)": "0.52",
+                "Content Download (milliseconds)": "1.09"
+            },
+            {
+                "Request sent(microseconds)": "68",
+                "Waiting(TTFB)(milliseconds)": "0.43",
+                "Content Download (milliseconds)": "0.87"
+            },
+            {
+                "Request sent(microseconds)": "68",
+                "Waiting(TTFB)(milliseconds)": "0.50",
+                "Content Download (milliseconds)": "1.17"
+            },
+            {
+                "Request sent(microseconds)": "64",
+                "Waiting(TTFB)(milliseconds)": "0.48",
+                "Content Download (milliseconds)": "1.09"
+            }
+        ],
+        "Vue": [
+            {
+                "Request sent(microseconds)": "55",
+                "Waiting(TTFB)(milliseconds)": "0.58",
+                "Content Download (milliseconds)": "1.02"
+            },
+            {
+                "Request sent(microseconds)": "56",
+                "Waiting(TTFB)(milliseconds)": "0.46",
+                "Content Download (milliseconds)": "1.22"
+            },
+            {
+                "Request sent(microseconds)": "56",
+                "Waiting(TTFB)(milliseconds)": "0.49",
+                "Content Download (milliseconds)": "1.06"
+            },
+            {
+                "Request sent(microseconds)": "54",
+                "Waiting(TTFB)(milliseconds)": "0.47",
+                "Content Download (milliseconds)": "0.84"
+            },
+            {
+                "Request sent(microseconds)": "58",
+                "Waiting(TTFB)(milliseconds)": "0.49",
+                "Content Download (milliseconds)": "0.95"
+            }
+        ]
+    }
+}

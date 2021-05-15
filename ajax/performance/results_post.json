@@ -1,0 +1,12 @@
+{
+    "Vugu": {
+        "Request sent(microseconds)": "66.6",
+        "Waiting(TTFB)(milliseconds)": "0.51",
+        "Content Download (milliseconds)": "1.01"
+    },
+    "Vue": {
+        "Request sent(microseconds)": "55.8",
+        "Waiting(TTFB)(milliseconds)": "0.49800000000000005",
+        "Content Download (milliseconds)": "1.0180000000000002"
+    }
+}
